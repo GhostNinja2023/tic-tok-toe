@@ -1,13 +1,16 @@
 import Icon from "./Components/Icon"
 import { useState } from "react"
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 import "./style.css"
 
-
+let tiktoktoeArray = new Array(9).fill("") 
 const App = () => {
-    let tiktoktoeArray = new Array(9).fill("") 
+    
     let [isCross, setIsCross] = useState(true)
-    let [winner, setWinner] = useState("X has won")
+    let [winner, setWinner] = useState("")
 
     // playAgain
     function playAgain(){
@@ -53,6 +56,10 @@ const App = () => {
 
         // draw
 
+        else if(tiktoktoeArray.indexOf("") == -1){
+            setWinner("Game Draw")
+        }
+
     }
 
 
@@ -61,9 +68,14 @@ const App = () => {
 
     function changeItem(index){
            
-          // some changes
+           if(winner !=""){
+                return toast("Game has already got over")
+           }
+
+
+
            if(tiktoktoeArray[index] !=""){
-                 console.log("already filled") // some changes
+                return toast("Already filled")
            }
 
            else if(tiktoktoeArray[index] == ""){
@@ -76,6 +88,7 @@ const App = () => {
 
     return (
             <div className="tik"> 
+                  <ToastContainer  position="bottom-center"/>
                 {
                   winner=="" ? (
                     <div className="turn"> <h1>Hey {isCross==true?"cross":"cricle"} Your Turn </h1></div>
